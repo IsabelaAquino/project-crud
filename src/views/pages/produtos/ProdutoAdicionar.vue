@@ -53,7 +53,7 @@
     <v-btn
       color="#00aeff"
       min-width="150"
-      @click.prevent="adicionarProduto"
+      @click.prevent="adicionarEditarProduto"
       class="btn"
       v-bind:disabled="produto.title == '' ? true : false"
     >
@@ -67,9 +67,23 @@ import ProdutosService from "../../../services/services";
 
 export default {
   name: "ProdutoAdicionar",
+  props: {
+    produto: {
+      type: Object,
+      default: {
+        id: "",
+        title: "",
+        price: "",
+        description: "",
+        image: null,
+        category: ""
+      }
+    },
+  },
   data() {
     return {
       produto: {
+        id: "",
         title: "",
         price: "",
         description: "",
@@ -77,6 +91,9 @@ export default {
         category: ""
       }
     };
+  },
+  created() {
+    // console.log("props", props)
   },
   methods: {
     formatarProduto() {
@@ -87,6 +104,7 @@ export default {
         form.append(files[i].name, files[i]);
       }
 
+      form.append("id", this.produto.id);
       form.append("title", this.produto.title);
       form.append("price", this.produto.price);
       form.append("description", this.produto.description);
@@ -94,20 +112,30 @@ export default {
 
       return form;
     },
-    async adicionarProduto(event) {
+    async adicionarEditarProduto(event) {
       const produto = this.formatarProduto();
 
       const button = event.currentTarget;
 
-
-      await ProdutosService.post(produto).then((response) => {
+      if(this.produto.id == "" || this.produto.id == undefined || this.produto.id == null){
+        await ProdutosService.post(produto).then((response) => {
           if (response.data !== undefined) {
-              this.$emit('atualizaProdutos', "success")
+            this.$emit('atualizaProdutos', "success")
           }
+         }
+        ).catch(error =>
+          this.$emit('atualizaProdutos', "error")
+        )
+      }else{
+        await ProdutosService.edit(produto, this.produto.id).then((response) => {
+          if (response.data !== undefined) {
+            this.$emit('atualizaProdutos', "success")
+          }
+         }
+        ).catch(error =>
+          this.$emit('atualizaProdutos', "error")
+        )
       }
-      ).catch(error =>
-        this.$emit('atualizaProdutos', "error")
-      )
 
     }
   }
