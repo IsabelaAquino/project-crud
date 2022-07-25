@@ -202,9 +202,9 @@
         this.modalAddProduto = !this.modalAddProduto
         this.ativaNotificacao(retorno)
         if(retorno == 'success')
-          this.returnRequestMessagem = 'Produto Adicionado com Sucesso.'
+          this.returnRequestMessagem = 'Produto com Sucesso.'
         else
-          this.returnRequestMessagem = 'Ocorreu um erro ao adicionar um novo produto.'
+          this.returnRequestMessagem = 'Ocorreu um erro no servidor.'
 
         //aqui faria o update da nova lista de produtos se a api fosse com dados reais
         this.getProdutos()
