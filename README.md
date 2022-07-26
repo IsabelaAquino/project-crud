@@ -34,6 +34,7 @@ You can also run additional tasks such as (o comando run é opcional)
 Observações:
 Não foi implementado os arquivos de testes mas o mesmo pode ser adicionado com jest futuramente
 Não foi implementado Vuex 
+Na pasta prints contém umas imagens do projeto
 
 Melhorias:
 (As observações citadas acima)

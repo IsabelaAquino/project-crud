@@ -57,7 +57,7 @@
       class="btn"
       v-bind:disabled="produto.title == '' ? true : false"
     >
-      Adicionar Produto
+      {{produto.id != undefined ? 'Editar Produto' : 'Adicionar Produto'}}
     </v-btn>
   </form>
 </template>
